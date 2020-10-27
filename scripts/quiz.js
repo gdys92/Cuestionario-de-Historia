@@ -1,4 +1,4 @@
-"use strict";
+
 
 let TIME_OVER_SYM = Symbol("TO");
 let TIMER_INTERVAL_SYM = Symbol("TI");
@@ -174,8 +174,7 @@ class Quiz {
     }
 
     /**
-     * Omitir pregunta y elija la siguiente pregunta si existe.
-     
+     * Omitir pregunta y elija la siguiente pregunta si existe. 
      */
     skipCurrentQuestion() {
         if (!this._startTime) {
@@ -218,16 +217,14 @@ class Quiz {
     }
 
     /**
-     * Check if the head question is the last question of running quiz.
+     * Compruebe si la primera pregunta es la última pregunta de la ejecución de la prueba.
      */
     isOnLastQuestion() {
         return this._currentQuestionIndex + 1 >= this._questions.length
     }
 
     /**
-     * Get the details of the timing of the quiz
-     *
-     * @returns {{start: null, end: null, timeOver: *, quizTime: *, elapsedTime: number, remainingTime: *}}
+     * Obtenga los detalles del momento del cuestionario.
      */
     get timeDetails() {
         let now = new Date().getTime();
@@ -242,18 +239,16 @@ class Quiz {
     }
 
     /**
-     * Control the ticker of the time of the running quiz.
-     *
-     * @private
+     * Controlar el codigo de la hora de la prueba de ejecución.
      */
     _setTicker() {
         if (!this._startTime) {
-            console.log("Quiz not started yet.");
+            console.log("El cuestionario aún no ha comenzado.");
             return;
         }
 
         if (this[TIMER_INTERVAL_SYM]) {
-            console.log("The ticker has been set before");
+            console.log("El codigo se ha establecido antes");
             return;
         }
 
@@ -271,23 +266,22 @@ class Quiz {
 }
 
 /**
- * Private function to ask next question.
- * @returns {*}
+ * Función para hacer la siguiente pregunta.
  */
 function askNextQuestion() {
     if (!this._startTime) {
-        console.log("Quiz not started");
+        console.log("El cuestionario no inició.");
         return;
     }
 
     const currentQ = this.currentQuestion;
     if (currentQ.answer === void (0) && currentQ.skip === void (0)) {
-        console.log("Current question answered or skipped.");
+        console.log("Pregunta actual respondida o omitida.");
         return;
     }
 
     if (this.isOnLastQuestion()) {
-        console.log("No more question.");
+        console.log("No más preguntas.");
         return;
     }
 
@@ -295,24 +289,14 @@ function askNextQuestion() {
 }
 
 /**
- * check the validity of the selected option
- *
- * @param questionID
- * @param option
+ * comprobar la validez de la opción seleccionada
  */
 function checkAnswerValidity(questionID, option) {
-
-    // Every checking could be apply here but
-    // the correct answer is the second option in
-    // my questions because of its simplicity
     return +option === 1;
 }
 
 /**
- * Convert number (in second) to time-string
- *
- * @param seconds
- * @returns {string}
+ * Convertir número (en segundo) a time-string
  */
 function secToTimeStr(seconds) {
 

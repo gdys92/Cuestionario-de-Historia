@@ -1,14 +1,5 @@
-"use strict";
 
 class QuizElementsHelper {
-  /**
-   *
-   * @param app {Element} - the element of the whole app
-   * @param quizCard {Element} - the wrapper of the quiz details
-   * @param questionCard {Element} - the wrapper of the questions card
-   * @param resultCard {Element} - the wrapper of the result card
-   * @param quiz {Quiz} - an instance of the Quiz class
-   */
   constructor(app, quizCard, questionCard, resultCard, quiz) {
     this.app = app;
     this.quiz = quiz;
@@ -16,21 +7,15 @@ class QuizElementsHelper {
     this.questionCard = questionCard;
     this.resultCard = resultCard;
 
-    // find & assign elements
     this.assignElements();
-
-    // initialize the listeners
     this.initListeners();
-
-    // show quiz details card
     this.showQuizCard();
   }
 
   /**
-   * find the inner elements of each card and assign to it.
+   * encontrar los elementos internos de cada tarjeta.
    */
   assignElements() {
-    // Quiz Card Elements
     this.quizCard.startBtn = this.quizCard.querySelector(
       ".quiz-details__start-btn"
     );
@@ -47,7 +32,7 @@ class QuizElementsHelper {
       ".quiz-details__meta.--t strong"
     );
 
-    // Question Card Elements
+
     this.questionCard.progressRemainingTimeElm = document.querySelector(
       ".questions-card__remaining-time"
     );
@@ -75,13 +60,13 @@ class QuizElementsHelper {
     this.questionCard.nextBtn = this.app.querySelector("#next-btn");
     this.questionCard.stopBtn = this.app.querySelector("#stop-btn");
 
-    // Result Card Elements
+
     this.resultCard.gotoHome = this.resultCard.querySelector("#go-to-home");
     this.resultCard.scoreElm = this.resultCard.querySelector("#score");
   }
 
   /**
-   * initialize the required listeners of the elements
+   * iniciando los requerimientos listeners de los elementos.
    */
   initListeners() {
     this.quizCard.startBtn.addEventListener(
@@ -103,7 +88,7 @@ class QuizElementsHelper {
   }
 
   /**
-   * Show the details card of the quiz
+   * Mostrar los detalles de la tarjeta del cuestionario.
    */
   showQuizCard() {
     this.quizCard.titleElm.innerText = this.quiz.title;
@@ -115,14 +100,14 @@ class QuizElementsHelper {
   }
 
   /**
-   * hide the quiz card
+   * ocultar la tarjeta del cuestionario.
    */
   hideQuizCard() {
     this.quizCard.classList.remove("show");
   }
 
   /**
-   * Show the question card
+   * Mostrar la tarjeta de pregunta
    */
   showQuestionsCard() {
     this.hideQuizCard();
@@ -134,15 +119,14 @@ class QuizElementsHelper {
   }
 
   /**
-   * hide the question card
+   * ocultar la tarjeta de pregunta.
    */
   hideQuestionsCard() {
     this.questionCard.classList.remove("show");
   }
 
   /**
-   * Handle the visibility of the result card
-   * @param result - the object of quiz result thet contains score property
+   * Manejando la visibilidad de la tarjeta de resultados.
    */
   showResultCard(result) {
     this.hideQuestionsCard();
@@ -154,7 +138,7 @@ class QuizElementsHelper {
   }
 
   /**
-   * hide the result card
+   * ocultar la tarjeta de resultado.
    */
   hideResultCard() {
     this.resultCard.classList.remove("show");
@@ -162,7 +146,7 @@ class QuizElementsHelper {
   }
 
   /**
-   * Handle the starting of the quiz and control the status of it.
+   * Manejando el inicio de la prueba y controlar el estado de la misma.
    */
   startQuiz() {
     this.resetPreviousQuiz();
@@ -172,43 +156,38 @@ class QuizElementsHelper {
       this.parseNextQuestion(firstQuestion);
     }
 
-    this.questionCard.nextBtn.innerText = "Next";
+    this.questionCard.nextBtn.innerText = "Siguiente";
 
     this._setProgressTicker();
   }
 
   /**
-   * initialize the quiz time progress on every time that quiz starts
-   * to control the progressbar and remaining time
-   * @private
+   * inicializando el progreso del tiempo de prueba cada vez que el cuestionario comienza a controlar la barra de progreso y el tiempo restante.
    */
   _setProgressTicker() {
     this.remainingTimeInterval = setInterval(() => {
       const qTime = this.quiz.timeDetails;
       if (qTime && qTime.remainingTime) {
-        // update remaining time span
+        
         this.questionCard.progressRemainingTimeElm.innerText =
           qTime.remainingTime;
 
-        // update progressbar
         let progressPercent =
           ((qTime.quizTime - qTime.elapsedTime) * 100) / qTime.quizTime;
         if (progressPercent < 0) progressPercent = 0;
         this.questionCard.progressbarElm.style.width = progressPercent + "%";
       }
 
-      // clear & stop interval when time over
       if (qTime.timeOver) {
         this.questionCard.classList.add("time-over");
-        this.questionCard.nextBtn.innerText = "Show Result";
+        this.questionCard.nextBtn.innerText = "Mostrar Resultados";
         clearInterval(this.remainingTimeInterval);
       }
     }, 1000);
   }
 
   /**
-   * this method putting the question in the question card
-   * @param question - the object of the question that received from this.quiz
+   * este método coloca la pregunta en la tarjeta de pregunta
    */
   parseNextQuestion(question) {
     const selectedOption = document.querySelector(
@@ -228,12 +207,12 @@ class QuizElementsHelper {
     this.questionCard.optionThreeElm.innerText = question.options[2];
     this.questionCard.optionFourElm.innerText = question.options[3];
 
-    // reset pre selected options on every next
+    // restablece las opciones preseleccionadas en cada "siguiente".
     if (selectedOption) selectedOption.checked = false;
   }
 
   /**
-   * To reset the previous quiz status before restarting it.
+   * Para restablecer el estado de la prueba anterior antes de reiniciarlo.
    */
   resetPreviousQuiz() {
     this.quiz.stop();
@@ -245,7 +224,7 @@ class QuizElementsHelper {
   }
 
   /**
-   * this will call when next button clicked
+   * Esto funciona cuando el boton "siguiente" haga clic.
    */
   nextBtnHandler() {
     const selectedOption = document.querySelector(
@@ -267,7 +246,7 @@ class QuizElementsHelper {
   }
 
   /**
-   * this will call when stop button clicked
+   * Esto funciona cuando el botón de "parar" haga clic.
    */
   stopBtnHandler() {
     this.resetPreviousQuiz();

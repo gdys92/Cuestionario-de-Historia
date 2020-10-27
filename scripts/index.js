@@ -1,4 +1,3 @@
-"use strict";
 
 const app = document.getElementById("quiz-app");
 const quizCard = document.getElementById("quiz-details");

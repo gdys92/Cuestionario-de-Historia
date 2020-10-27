@@ -194,11 +194,11 @@ class QuizElementsHelper {
       "input[name=question-option]:checked"
     );
 
-    this.questionCard.progressQuestionCountElm.innerText = `Question ${this.quiz
+    this.questionCard.progressQuestionCountElm.innerText = `Pregunta ${this.quiz
       ._currentQuestionIndex + 1}/${this.quiz._questions.length}`;
     this.questionCard.questionTitleElm.setAttribute(
       "data-qn",
-      `Q ${this.quiz._currentQuestionIndex + 1}:`
+      `P ${this.quiz._currentQuestionIndex + 1}:`
     );
     this.questionCard.questionTitleElm.innerText = question.title;
 

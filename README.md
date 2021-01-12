@@ -1,4 +1,4 @@
-# Cuestionario de Historia
+# Universal History Questionnaire
 
 World history question app.
 ## Made with:
